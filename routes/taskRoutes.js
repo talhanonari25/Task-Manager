@@ -1,12 +1,6 @@
 const express = require("express");
 const { check } = require("express-validator");
-const {
-  createTask,
-  getTasks,
-  getTaskById,
-  updateTask,
-  deleteTask,
-} = require("../controllers/taskController");
+const {createTask, getTasks, getTaskById, updateTask, deleteTask} = require("../controllers/taskController");
 const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 

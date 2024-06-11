@@ -1,5 +1,5 @@
-const Task = require("../models/Task");
-const { validationResult } = require("express-validator");
+const Task = require('../models/Task');
+const { validationResult } = require('express-validator');
 
 const createTask = async (req, res) => {
   const errors = validationResult(req);
@@ -17,7 +17,7 @@ const createTask = async (req, res) => {
     res.status(201).json(savedTask);
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -27,7 +27,7 @@ const getTasks = async (req, res) => {
     res.json(tasks);
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -35,12 +35,12 @@ const getTaskById = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
     if (!task) {
-      return res.status(404).json({ message: "Task not found" });
+      return res.status(404).json({ message: 'Task not found' });
     }
     res.json(task);
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -53,11 +53,11 @@ const updateTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
     if (!task) {
-      return res.status(404).json({ message: "Task not found" });
+      return res.status(404).json({ message: 'Task not found' });
     }
 
     if (task.user.toString() !== req.user.id) {
-      return res.status(401).json({ message: "Not authorized" });
+      return res.status(401).json({ message: 'Not authorized' });
     }
 
     task.title = req.body.title || task.title;
@@ -68,7 +68,7 @@ const updateTask = async (req, res) => {
     res.json(updatedTask);
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -76,18 +76,18 @@ const deleteTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
     if (!task) {
-      return res.status(404).json({ message: "Task not found" });
+      return res.status(404).json({ message: 'Task not found' });
     }
 
     if (task.user.toString() !== req.user.id) {
-      return res.status(401).json({ message: "Not authorized" });
+      return res.status(401).json({ message: 'Not authorized' });
     }
 
     await task.deleteOne();
-    res.json({ message: "Task removed" });
+    res.json({ message: 'Task removed' });
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
