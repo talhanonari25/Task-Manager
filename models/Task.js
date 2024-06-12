@@ -19,4 +19,8 @@ const TaskSchema = new mongoose.Schema({
   },
 });
 
+TaskSchema.statics.updateStatus = async (taskId, upStatus)=> {
+  return this.updateOne({_id:taskId}, {$set: { status: upStatus }});
+};
+
 module.exports = mongoose.model('Task', TaskSchema);

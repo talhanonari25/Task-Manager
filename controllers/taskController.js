@@ -1,4 +1,5 @@
 const Task = require('../models/Task');
+const taskQueue = require('./taskQueue');
 const { validationResult } = require('express-validator');
 
 const createTask = async (req, res) => {
@@ -14,6 +15,7 @@ const createTask = async (req, res) => {
       user: req.user.id,
     });
     const savedTask = await task.save();
+    taskQueue.add({ taskId: task.id }, { delay: 5000 });
     res.status(201).json(savedTask);
   } catch (err) {
     console.error(err.message);
